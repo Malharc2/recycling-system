@@ -14,18 +14,24 @@ README.md: This file provides instructions for setting up and running the projec
 Setup and Usage
 To set up and run the project, follow these steps:
 
-1. Clone the Repository:
+Clone the Repository:
+
+
 git clone https://github.com/Malharc2/recycling-system.git
+Navigate to the Project Directory:
 
-2. Navigate to the Project Directory:
+
 cd recycling-system
+Run the Command-Line Interface (CLI) Version:
 
-3. Run the Command-Line Interface (CLI) Version:
+
 python recycling_system.py
+Follow the on-screen prompts to add items, view the total reward, reset the system, or exit.
 
-5. Run the Graphical User Interface (GUI) Version:
+Run the Graphical User Interface (GUI) Version:
+
+
 python recycling_system_gui.py
-
 Use the GUI to interact with the system.
 
 Assumptions and Design Decisions
@@ -34,3 +40,4 @@ Data Management: The project maintains a record of items accepted and the total 
 User Interface: Both CLI and GUI interfaces are provided for user interaction, catering to different user preferences.
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
+
