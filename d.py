@@ -5,9 +5,11 @@ class Item:
     """
     Class representing a recyclable item.
     """
-    def __init__(self, item_type, reward):
+    def __init__(self, item_type, reward, shape=None, weight=None):
         self.item_type = item_type
         self.reward = reward
+        self.shape = shape
+        self.weight = weight
 
 class RecyclingSystem:
     """
@@ -22,21 +24,24 @@ class RecyclingSystem:
             'C': 0.15
         }
 
-    def add_item(self, item_type):
+    def add_item(self, item_type, shape=None, weight=None):
         """
         Add an item to the system and update the total reward.
         
         Parameters:
         item_type (str): The type of the item (A, B, C).
+        shape (str): The shape of the item (optional).
+        weight (float): The weight of the item (optional).
         
         Returns:
         str: Result message indicating success or failure.
         """
         if item_type in self.item_rewards:
-            item = Item(item_type, self.item_rewards[item_type])
+            reward = self.item_rewards[item_type]
+            item = Item(item_type, reward, shape, weight)
             self.items.append(item)
-            self.total_reward += item.reward
-            return f"Added item of type {item_type} with reward {item.reward} INR"
+            self.total_reward += reward
+            return f"Added item of type {item_type} with reward {reward} INR"
         else:
             return "Invalid item type. Please enter A, B, or C."
 
@@ -75,11 +80,23 @@ class RecyclingSystemGUI:
         """
         Create and arrange the widgets in the GUI.
         """
-        self.label = tk.Label(self.root, text="Enter item type (A, B, C):")
-        self.label.pack(pady=5)
+        self.label_item_type = tk.Label(self.root, text="Enter item type (A, B, C):")
+        self.label_item_type.pack(pady=5)
 
-        self.entry = tk.Entry(self.root)
-        self.entry.pack(pady=5)
+        self.entry_item_type = tk.Entry(self.root)
+        self.entry_item_type.pack(pady=5)
+
+        self.label_shape = tk.Label(self.root, text="Enter item shape:")
+        self.label_shape.pack(pady=5)
+
+        self.entry_shape = tk.Entry(self.root)
+        self.entry_shape.pack(pady=5)
+
+        self.label_weight = tk.Label(self.root, text="Enter item weight:")
+        self.label_weight.pack(pady=5)
+
+        self.entry_weight = tk.Entry(self.root)
+        self.entry_weight.pack(pady=5)
 
         self.add_button = tk.Button(self.root, text="Add Item", command=self.add_item)
         self.add_button.pack(pady=5)
@@ -100,10 +117,14 @@ class RecyclingSystemGUI:
         """
         Handle the action of adding an item to the system.
         """
-        item_type = self.entry.get().upper().strip()
-        result = self.system.add_item(item_type)
+        item_type = self.entry_item_type.get().upper().strip()
+        shape = self.entry_shape.get().strip()
+        weight = float(self.entry_weight.get().strip())
+        result = self.system.add_item(item_type, shape, weight)
         self.result_label.config(text=result)
-        self.entry.delete(0, tk.END)
+        self.entry_item_type.delete(0, tk.END)
+        self.entry_shape.delete(0, tk.END)
+        self.entry_weight.delete(0, tk.END)
 
     def view_total_reward(self):
         """
